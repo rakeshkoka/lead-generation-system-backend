@@ -10,6 +10,7 @@ import cors from "cors";
 app.use(cors({
     origin: [
         "http://localhost:5173",
+        "https://lead-generation-system.vercel.app/",
         "https://lead-generation-system-apy60hb18-rakeshs-projects-9f496bf3.vercel.app/"
     ],
 }))
