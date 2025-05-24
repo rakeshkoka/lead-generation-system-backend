@@ -32,8 +32,8 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/lead-generation-backend.git
-cd lead-generation-backend
+git clone https://github.com/rakeshkoka/lead-generation-system-backend.git
+cd lead-generation-system-backend
 ```
 
 ### 2. Install Dependencies
@@ -45,15 +45,6 @@ npm install
 Create a `.env` file in the root directory:
 ```env
 PORT=5000
-N8N_WEBHOOK_URL=https://your-n8n-domain.app.n8n.cloud/webhook/lead-capture
-NODE_ENV=development
-```
-
-For production:
-```env
-PORT=10000
-N8N_WEBHOOK_URL=https://your-n8n-domain.app.n8n.cloud/webhook/lead-capture
-NODE_ENV=production
 ```
 
 ### 4. Start Development Server
@@ -70,14 +61,8 @@ backend/
 ├── src/
 │   ├── controllers/
 │   │   └── leadController.js
-│   ├── middleware/
-│   │   ├── cors.js
-│   │   ├── errorHandler.js
-│   │   └── validation.js
 │   ├── routes/
 │   │   └── leadRoutes.js
-│   ├── utils/
-│   │   └── n8nIntegration.js
 │   └── index.js
 ├── .env
 ├── package.json
@@ -115,32 +100,6 @@ Content-Type: application/json
 {
   "success": true,
   "message": "Lead submitted successfully",
-  "timestamp": "2024-01-15T10:30:00.000Z"
-}
-```
-
-**Error Response:**
-```json
-{
-  "success": false,
-  "message": "Validation failed",
-  "errors": {
-    "email": "Valid email is required",
-    "name": "Name is required"
-  }
-}
-```
-
-### GET /health
-
-Health check endpoint for monitoring.
-
-**Response:**
-```json
-{
-  "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "uptime": 3600
 }
 ```
 
@@ -153,28 +112,6 @@ The backend integrates with n8n through webhooks to automate:
 2. **Team Notification Email** - Sends internal notification to sales team
 3. **User Thank You Email** - Sends confirmation to lead
 4. **Google Sheets Storage** - Stores lead data for tracking
-
-### Integration Code
-```javascript
-const sendToN8n = async (leadData) => {
-  const payload = {
-    name: leadData.name,
-    email: leadData.email,
-    company: leadData.company,
-    message: leadData.message,
-    timestamp: new Date().toISOString(),
-    source: 'website'
-  };
-
-  try {
-    await axios.post(process.env.N8N_WEBHOOK_URL, payload);
-    console.log('Lead sent to n8n successfully');
-  } catch (error) {
-    console.error('n8n integration error:', error.message);
-    throw new Error('Workflow processing failed');
-  }
-};
-```
 
 ## 🚀 Deployment
 
@@ -199,31 +136,12 @@ const sendToN8n = async (leadData) => {
 
 4. **Set Environment Variables**
    ```
-   PORT=10000
-   N8N_WEBHOOK_URL=https://your-n8n-domain.app.n8n.cloud/webhook/lead-capture
-   NODE_ENV=production
+   PORT=5000
    ```
 
 5. **Deploy**
    - Click "Create Web Service"
    - Note your deployment URL (e.g., `https://your-app.onrender.com`)
-
-### Alternative Deployment Options
-
-**Heroku**
-```bash
-heroku create your-app-name
-heroku config:set N8N_WEBHOOK_URL=your-webhook-url
-git push heroku main
-```
-
-**Railway**
-```bash
-railway login
-railway init
-railway add
-railway deploy
-```
 
 ## 🔐 CORS Configuration
 
@@ -278,31 +196,6 @@ curl -X POST https://your-n8n-domain/webhook-test/lead-capture \
 - Verify all environment variables are set
 - Ensure Node.js version compatibility
 
-## 📊 Monitoring & Logging
-
-### Health Monitoring
-```javascript
-// Add to your monitoring system
-GET /health
-
-// Expected response
-{
-  "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "uptime": 3600
-}
-```
-
-### Error Logging
-```javascript
-// All errors are logged with context
-console.error('Lead submission error:', {
-  error: error.message,
-  timestamp: new Date().toISOString(),
-  leadData: sanitizedData
-});
-```
-
 ## 🧪 Testing
 
 ### Manual Testing
@@ -318,18 +211,6 @@ curl -X POST http://localhost:5000/api/submit-lead \
   }'
 ```
 
-### Automated Testing
-```bash
-npm test
-```
-
-## 📈 Performance Optimization
-
-- **Async/Await**: Non-blocking operations
-- **Error Boundaries**: Graceful error handling
-- **Lightweight Dependencies**: Minimal package footprint
-- **Environment-based Configuration**: Optimized for different environments
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -337,10 +218,6 @@ npm test
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
@@ -356,13 +233,8 @@ If you encounter any issues:
 
 ## 🔗 Related Repositories
 
-- [Frontend Repository](https://github.com/yourusername/lead-generation-frontend)
-- [Complete System Documentation](https://github.com/yourusername/lead-generation-docs)
+- [Frontend Repository](https://github.com/rakeshkoka/lead-generation-system.git)
+- [Complete System Documentation](https://docs.google.com/document/d/11QkuW50WU_SNdSLQE3ywvxXIJx0ESL34/edit?usp=sharing&ouid=116430246273662677638&rtpof=true&sd=true)
 
 ---
-
-**API Documentation**: Available at `/api/docs` (if implemented)
-
-**Live API**: [https://your-backend.onrender.com](https://your-backend.onrender.com)
-
-**Health Check**: [https://your-backend.onrender.com/health](https://your-backend.onrender.com/health)
+**Live API**: [https://your-backend.onrender.com](https://lead-generation-system-backend.onrender.com)
